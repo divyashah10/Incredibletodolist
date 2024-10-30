@@ -1,5 +1,16 @@
 import React from 'react';
 import { ScrollView, Pressable, View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+
+function ToDoList({ tasks }) {
+  return (
+    <ul>
+      {tasks.map((task, index) => (
+        <li key={index}>{task}</li>
+      ))}
+    </ul>
+  );
+}
 
 function ToDoList() {
   return (
@@ -36,5 +47,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+return (
+  <div>
+    <h1>My To-Do List</h1>
+    <ToDoList tasks={tasks} />
+  </div>
+);
 
 export default ToDoList;
