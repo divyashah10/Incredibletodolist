@@ -1,21 +1,53 @@
 import React, { useState } from 'react';
-import ToDoList from './ToDoList';
+import { View, FlatList, Text, StyleSheet } from 'react-native';
+import ToDoForm from './components/ToDoForm';
 
-const App = () => {
+export default function App() {
 
-  const [tasks, setTasks] = useState([
-    'Do laundry',
-    'Go to gym',
-    'Walk dog'
-  ]);
+  const [tasks, setTasks] = useState([]);
+
+  const addTask = (taskText) => {
+    if (taskText && !tasks.includes(taskText)) { 
+      setTasks([...tasks, taskText]);
+    }
+  };
 
   return (
-    <div>
-      <h1>My To-Do List</h1>
+    <View style={styles.container}>
+      <Text style={styles.header}>To-Do List</Text>
+      <ToDoForm addTask={addTask} />
 
-      <ToDoList tasks={tasks} />
-    </div>
+      {/* Display tasks */}
+      <FlatList
+        data={tasks}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.taskItem}>
+            <Text style={styles.taskText}>{item}</Text>
+          </View>
+        )}
+      />
+    </View>
   );
-};
-
-export default App;
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  taskItem: {
+    padding: 10,
+    backgroundColor: '#d3e0ea',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  taskText: {
+    fontSize: 18,
+  },
+});

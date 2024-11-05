@@ -1,57 +1,40 @@
-import React from 'react';
-import { ScrollView, Pressable, View, Text, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { View, TextInput, Button, StyleSheet } from 'react-native';
 
-function ToDoList({ tasks }) {
-  return (
-    <ul>
-      {tasks.map((task, index) => (
-        <li key={index}>{task}</li>
-      ))}
-    </ul>
-  );
-}
+export default function ToDoForm({ addTask }) {
 
-function ToDoList() {
+  const [taskText, setTaskText] = useState('');
+
+  const handleAddTask = () => {
+    addTask(taskText);
+    setTaskText('');
+  };
+
   return (
-    <ScrollView>
-      <Pressable>
-        <View style={[styles.task, styles.completed]}>
-          <Text style={styles.taskText}>Do laundry</Text>
-        </View>
-      </Pressable>
-      <Pressable>
-        <View style={styles.task}>
-          <Text style={styles.taskText}>Go to gym</Text>
-        </View>
-      </Pressable>
-      <Pressable>
-        <View style={[styles.task, styles.completed]}>
-          <Text style={styles.taskText}>Walk dog</Text>
-        </View>
-      </Pressable>
-    </ScrollView>
+    <View style={styles.form}>
+      <TextInput
+        style={styles.input}
+        placeholder="Add a new task..."
+        onChangeText={(text) => setTaskText(text)}
+        value={taskText}
+      />
+      <Button title="Add Task" onPress={handleAddTask} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  task: {
-    padding: 10,
-    borderBottomWidth: 1,
+  form: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  input: {
+    flex: 1,
+    height: 40,
     borderColor: '#ccc',
-  },
-  completed: {
-    backgroundColor: '#e0e0e0',
-  },
-  taskText: {
-    fontSize: 16,
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginRight: 10,
   },
 });
-return (
-  <div>
-    <h1>My To-Do List</h1>
-    <ToDoList tasks={tasks} />
-  </div>
-);
-
-export default ToDoList;
