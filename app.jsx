@@ -16,8 +16,7 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.header}>To-Do List</Text>
       <ToDoForm addTask={addTask} />
-
-      {/* Display tasks */}
+      
       <FlatList
         data={tasks}
         keyExtractor={(item, index) => index.toString()}
